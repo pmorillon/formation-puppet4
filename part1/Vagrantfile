@@ -1,0 +1,14 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "debian/jessie64"
+  config.vm.forward_port 80, 10080
+
+  config.vm.provision "shell", inline: <<-SHELL
+    cd /tmp && wget -q http://apt.puppetlabs.com/puppetlabs-release-pc1-jessie.deb && dpkg -i puppetlabs-release-pc1-jessie.deb
+    apt-get update
+    apt-get install -y puppet-agent
+  SHELL
+end
