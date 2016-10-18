@@ -66,12 +66,24 @@ service {
 
 ```puppet
 file {
-  '/etc/apache2/conf.d/collection3.conf':
+  '/etc/apache2/conf-available/collection3.conf':
     ensure  => file,
     mode    => '0644',
     owner   => root,
     group   => root,
     source  => '/vagrant/tuto3/files/collection3.conf',
+}
+
+file {
+  '/etc/apache2/conf-enabled/collection3.conf':
+    ensure => '/etc/apache2/conf-available/collection3.conf';
+}
+
+file {
+  '/etc/apache2/mod-enabled/cgid.conf':
+    ensure => '/etc/apache2/mod-available/cgid.conf';
+  '/etc/apache2/mod-enabled/cgid.load':
+    ensure => '/etc/apache2/mod-available/cgid.load';
 }
 ```
 
