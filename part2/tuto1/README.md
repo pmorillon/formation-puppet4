@@ -41,19 +41,13 @@ vagrant@master:~$ sudo systemctl status puppetserver
 
 #### Configuration du master
 
-Par défaut le modulepath est `/etc/puppet/modules`. Pour les tutos, on va le modifer pour utiliser `/vagrant/modules`.
-Editer le fichier `/etc/puppet/puppet.conf` en utilisant l'option `modulepath=` dans la section `master`.
-
-Redémarrer ensuite le master :
-
-```
-vagrant@master:~$ sudo systemctl restart puppetserver
-```
-
 Editer `/etc/default/puppetserver` pour réduire l'utilisation de la mémoire du puppetserver :
 
 ```
 JAVA_ARGS="-Xms512m -Xmx512m"
+```
+```
+vagrant@master:~$ sudo systemctl status puppetserver
 ```
 
 ### Configuration de l'agent
