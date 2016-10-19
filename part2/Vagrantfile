@@ -1,0 +1,40 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.define :master do |master|
+    master.vm.box = "irisa_debian-8.0"
+    master.vm.box_url = "https://vagrant.irisa.fr/boxes/irisa_debian-8.0.box"
+    master.vm.network "private_network", ip: "10.2.2.10"
+
+    config.vm.provider "virtualbox" do |v|
+      v.memory = 2048
+    end
+
+    master.vm.provision "shell", inline: <<-SHELL
+      cd /tmp && wget -q http://apt.puppetlabs.com/puppetlabs-release-pc1-jessie.deb && dpkg -i puppetlabs-release-pc1-jessie.deb
+      apt-get update
+      apt-get install -y puppet-agent
+    SHELL
+
+    master.vm.provision "shell", inline: "/opt/puppetlabs/bin/puppet apply --modulepath=/vagrant/modules /vagrant/manifests/master.pp"
+
+  end
+
+  config.vm.define :agent do |agent|
+    agent.vm.box = "irisa_debian-8.0"
+    agent.vm.box_url = "https://vagrant.irisa.fr/boxes/irisa_debian-8.0.box"
+    agent.vm.network "private_network", ip: "10.2.2.11"
+
+    agent.vm.provision "shell", inline: <<-SHELL
+      cd /tmp && wget -q http://apt.puppetlabs.com/puppetlabs-release-pc1-jessie.deb && dpkg -i puppetlabs-release-pc1-jessie.deb
+      apt-get update
+      apt-get install -y puppet-agent
+    SHELL
+
+    agent.vm.provision "shell", inline: "/opt/puppetlabs/bin/puppet apply --modulepath=/vagrant/modules /vagrant/manifests/agent.pp"
+
+  end
+
+end
