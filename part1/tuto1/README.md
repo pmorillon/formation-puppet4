@@ -24,7 +24,7 @@ Démarrons la VM :
 ```shell
 [local]$ vagrant up
 [local]$ vagrant ssh
-[vagrant@jessie]$ dpkg puppet*
+[vagrant@jessie]$ dpkg  -l puppet*
 Desired=Unknown/Install/Remove/Purge/Hold
 | Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
 |/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)
